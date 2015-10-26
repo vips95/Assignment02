@@ -36,7 +36,7 @@ public class HeroController : MonoBehaviour {
 	void Start () {
 		this._rigidBody2D = gameObject.GetComponent<Rigidbody2D> ();
 		this._transform = gameObject.GetComponent<Transform> ();
-		//this._animator = gameObject.GetComponent<Animator> ();
+		this._animator = gameObject.GetComponent<Animator> ();
 		
 		this._audioSources = gameObject.GetComponents<AudioSource> ();
 		this._coinSound = this._audioSources [0];
@@ -52,6 +52,7 @@ public class HeroController : MonoBehaviour {
 		this._moving = Input.GetAxis ("Horizontal"); // value is between -1 and 1
 		
 		if (this._moving != 0) {
+			this._animator.SetInteger("AnimState",1); //play walk clip
 			// we're moving
 			if(this._moving > 0) {
 				// moving right
@@ -66,6 +67,7 @@ public class HeroController : MonoBehaviour {
 			}
 		} else if (this._moving == 0) {
 			// we're idle
+			this._animator.SetInteger("AnimState",0);
 		}
 		
 		this._rigidBody2D.AddForce (new Vector2 (forceX, forceY));
