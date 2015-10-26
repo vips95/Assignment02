@@ -24,101 +24,56 @@ public class HeroController : MonoBehaviour {
 	
 	
 	//PRIVATE INSTANCE VARIABLES ++++++++++++++++++++++++++++++
-	private Rigidbody2D rigid;
-	private Transform trans;
-	private Animator animate; // we'll use this later
-	private AudioSource[] audio;
-	private AudioSource coinaudio;
-	private AudioSource jumpaudio;
+	private Rigidbody2D _rigidBody2D;
+	private Transform _transform;
+	private Animator _animator; // we'll use this later
+	private AudioSource[] _audioSources;
+	private AudioSource _coinSound;
 	
-	private float moveValue = 0;
-	private bool facingright = true;
-	private bool ground = true;
+	private float _moving = 0;
 	
 	// Use this for initialization
 	void Start () {
-		this.rigid = gameObject.GetComponent<Rigidbody2D> ();
-		this.trans = gameObject.GetComponent<Transform> ();
-		this.animate = gameObject.GetComponent<Animator> ();
+		this._rigidBody2D = gameObject.GetComponent<Rigidbody2D> ();
+		this._transform = gameObject.GetComponent<Transform> ();
+		//this._animator = gameObject.GetComponent<Animator> ();
 		
-		this.audio = gameObject.GetComponents<AudioSource> ();
-		this.coinaudio = this.audio [0];
-		this.jumpaudio = this.audio [1];
+		this._audioSources = gameObject.GetComponents<AudioSource> ();
+		this._coinSound = this._audioSources [0];
 	}
 	
 	void FixedUpdate () {
 		float forceX = 0f;
 		float forceY = 0f;
 		
-		float absVelX = Mathf.Abs (this.rigid.velocity.x);
-		float absVelY = Mathf.Abs (this.rigid.velocity.y);
+		float absVelX = Mathf.Abs (this._rigidBody2D.velocity.x);
+		float absVelY = Mathf.Abs (this._rigidBody2D.velocity.y);
 		
-		this.moveValue = Input.GetAxis ("Horizontal"); // value is between -1 and 1
+		this._moving = Input.GetAxis ("Horizontal"); // value is between -1 and 1
 		
-		// check if player is moving
-		
-		if (this.moveValue != 0) {
+		if (this._moving != 0) {
 			// we're moving
-			this.animate.SetInteger("AnimState", 1); // play walk clip
-			if(this.moveValue > 0) {
+			if(this._moving > 0) {
 				// moving right
 				if(absVelX < this.velocityRange.vMax) {
 					forceX = this.speed;
-					this.facingright = true;
-					this._flip();
 				}
-			} else if (this.moveValue < 0) {
-				// moving left
+			} else if (this._moving < 0) {
+				//moving left
 				if(absVelX < this.velocityRange.vMax) {
 					forceX = -this.speed;
-					this.facingright = false;
-					this._flip();
 				}
 			}
-		} else if (this.moveValue == 0) {
+		} else if (this._moving == 0) {
 			// we're idle
-			this.animate.SetInteger("AnimState", 0);
 		}
 		
-		// Check if player is jumping
-		
-		if((Input.GetKey("up") || Input.GetKey(KeyCode.W))) {
-			// check if the player is grounded
-			if(this.ground) {
-				// player is jumping
-				this.animate.SetInteger("AnimState", 2);
-				if(absVelY < this.velocityRange.vMax) {
-					forceY = this.jump;
-					this.jumpaudio.Play();
-					this.ground = false;
-				}
-			}
-			
-		}
-		
-		this.rigid.AddForce (new Vector2 (forceX, forceY));
+		this._rigidBody2D.AddForce (new Vector2 (forceX, forceY));
 	}
 	
 	void OnCollisionEnter2D(Collision2D otherCollider) {
 		if (otherCollider.gameObject.CompareTag ("Coin")) {
-			this.coinaudio.Play();
+			this._coinSound.Play();
 		}
 	}
-	
-	void OnCollisionStay2D(Collision2D otherCollider) {
-		if (otherCollider.gameObject.CompareTag ("Platform")) {
-			this.ground = true;
-		}
-	}
-	
-	
-	// PRIVATE METHODS +++++++++++++++++++++++++++++++++++++++
-	private void _flip() {
-		if (this.facingright) {
-			this.trans.localScale = new Vector3(1f, 1f, 1f); // flip back to normal
-		} else {
-			this.trans.localScale = new Vector3(-1f, 1f, 1f);
-		}
-	}
-	
 }
