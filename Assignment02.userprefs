@@ -1,9 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\..\Assignment02\Assets\_Scripts\PlatformController.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_Scripts\HeroController.cs">
     <Files>
-      <File FileName="..\..\..\..\Assignment02\Assets\_Scripts\PlatformController.cs" Line="28" Column="3" />
-      <File FileName="Assets\_Scripts\PlatformController.cs" Line="28" Column="5" />
+      <File FileName="Assets\_Scripts\PlayerCollidor.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\HeroController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

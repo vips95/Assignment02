@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/* Name : Vipul Arora
+ * Last Modified by : Vipul Arora
+ * Date Last Modified: 26th October 2015
+ * Description: it adds speed, audio and effects to player and sound effects when collect coin and jump
+ */
+using UnityEngine;
 using System.Collections;
 
 // VELOCITYRANGE UTILITY CLASS
